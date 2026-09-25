@@ -3,8 +3,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![CustomTkinter](https://img.shields.io/badge/GUI-CustomTkinter%206.0-4F46E5?style=flat)](https://customtkinter.tomschimansky.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-green.svg)]()
 
 **Connecta** is a modern, portfolio-ready desktop contact management application built with **Python** and **CustomTkinter**. Designed with contemporary SaaS and productivity application ergonomics, it elevates the traditional contact book into an intuitive, card-based desktop workspace featuring live multi-field search, priority favorites, category segmentation, detailed profile inspection, light/dark themes, and persistent JSON storage.
 
