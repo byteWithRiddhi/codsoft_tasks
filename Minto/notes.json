@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "title": "Welcome to Minto Workspace",
+        "content": "Plan your days with focus and ease. Organize tasks, track project milestones, and review your weekly productivity streak.",
+        "category": "General",
+        "color": "#6366F1",
+        "updated_at": "2026-09-20T10:00:00"
+    },
+    {
+        "id": 2,
+        "title": "Exam Preparation Checklist",
+        "content": "1. Review Week 4 NPTEL lecture slides\n2. Solve previous year questions on inheritance and interfaces\n3. Summarize Android Studio rock-paper-scissors architecture",
+        "category": "Study",
+        "color": "#10B981",
+        "updated_at": "2026-09-20T14:30:00"
+    }
+]

@@ -1,0 +1,48 @@
+[
+    {
+        "id": 3,
+        "title": "Study for unit exam",
+        "description": "Watch Week 4 lecture videos and make summary notes",
+        "due_date": "2026-09-13",
+        "priority": "High",
+        "category": "Study",
+        "completed": false
+    },
+    {
+        "id": 4,
+        "title": "Work on project documentation",
+        "description": "Write system design section and component breakdown",
+        "due_date": "2026-09-15",
+        "priority": "Low",
+        "category": "Project",
+        "completed": true,
+        "status": "Completed"
+    },
+    {
+        "id": 5,
+        "title": "Attend Python workshop",
+        "description": "",
+        "due_date": "",
+        "priority": "Medium",
+        "category": "General",
+        "completed": true
+    },
+    {
+        "id": 6,
+        "title": "work on Android studio project",
+        "description": "Rock paper scissor game",
+        "due_date": "",
+        "priority": "High",
+        "category": "Project",
+        "completed": false
+    },
+    {
+        "id": 7,
+        "title": "python assignment",
+        "description": "",
+        "due_date": "",
+        "priority": "Medium",
+        "category": "Study",
+        "completed": false
+    }
+]

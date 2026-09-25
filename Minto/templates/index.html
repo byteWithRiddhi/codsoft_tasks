@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minto — Plan it. Do it. Done.</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <!-- ====================================================================
+         SIDEBAR NAVIGATION
+         ==================================================================== -->
+    <aside class="app-sidebar" id="appSidebar">
+      <!-- Header / Logo -->
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="brand-icon-wrapper">
+            <i data-lucide="check-circle-2" style="width: 22px; height: 22px;"></i>
+          </div>
+          <span class="brand-text">Minto</span>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarCollapseBtn" title="Toggle Sidebar">
+          <i data-lucide="chevrons-left" style="width: 16px; height: 16px;"></i>
+        </button>
+      </div>
+
+      <!-- User Profile Snippet -->
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarUserAvatar">R</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarUserName">Riddhi</div>
+          <div class="user-status">
+            <span class="status-indicator-dot"></span>
+            <span>Productivity Lead</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Button -->
+      <div class="sidebar-quick-action">
+        <button class="btn-sidebar-create" id="btnQuickAddTask">
+          <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
+          <span>Create Task</span>
+        </button>
+      </div>
+
+      <!-- Navigation Menu -->
+      <ul class="sidebar-nav">
+        <li class="nav-section-title">Workspace</li>
+        <li>
+          <a class="nav-item-link active" data-view="view-overview">
+            <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
+            <span>Overview</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item-link" data-view="view-tasks">
+            <i data-lucide="check-square" style="width: 18px; height: 18px;"></i>
+            <span>My Tasks</span>
+            <span class="nav-item-badge" id="navTaskCount">0</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item-link" data-view="view-calendar">
+            <i data-lucide="calendar" style="width: 18px; height: 18px;"></i>
+            <span>Calendar</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item-link" data-view="view-projects">
+            <i data-lucide="folder-kanban" style="width: 18px; height: 18px;"></i>
+            <span>Projects</span>
+          </a>
+        </li>
+
+        <li class="nav-section-title">Insights & Notes</li>
+        <li>
+          <a class="nav-item-link" data-view="view-analytics">
+            <i data-lucide="bar-chart-3" style="width: 18px; height: 18px;"></i>
+            <span>Analytics</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item-link" data-view="view-notes">
+            <i data-lucide="file-text" style="width: 18px; height: 18px;"></i>
+            <span>Notes</span>
+            <span class="nav-item-badge" id="navNotesCount">0</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item-link" data-view="view-settings">
+            <i data-lucide="settings" style="width: 18px; height: 18px;"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Productivity Quote Footer -->
+      <div class="sidebar-footer">
+        <div class="sidebar-quote-card">
+          <div class="quote-title">
+            <i data-lucide="sparkles" style="width: 14px; height: 14px; color: var(--primary);"></i>
+            <span>Daily Focus</span>
+          </div>
+          <div id="sidebarQuoteText">"Keep moving, one task at a time."</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN CONTENT SHELL
+         ==================================================================== -->
+    <div class="app-main">
+
+      <!-- Topbar Header -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+          </button>
+          
+          <div class="topbar-search-box">
+            <i data-lucide="search"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search tasks, notes, projects...">
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Quick Add Button -->
+          <button class="btn-add-task-topbar" id="topbarAddTaskBtn">
+            <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+            <span class="d-none d-sm-inline">Add Task</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light / Dark Mode">
+            <i data-lucide="moon" id="themeIcon" style="width: 18px; height: 18px;"></i>
+          </button>
+
+          <!-- Notification Bell -->
+          <div class="dropdown">
+            <button class="notification-btn" data-bs-toggle="dropdown" aria-expanded="false">
+              <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+              <span class="notification-badge" id="notificationDot"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 p-2" style="min-width: 260px;">
+              <li class="dropdown-header text-uppercase fw-bold" style="font-size: 0.72rem;">Notifications</li>
+              <li><div class="dropdown-item py-2" id="notificationItem">Welcome to Minto Workspace!</div></li>
+            </ul>
+          </div>
+
+          <!-- User Avatar Dropdown -->
+          <div class="dropdown">
+            <button class="btn p-0 border-0" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="user-avatar" style="width: 34px; height: 34px; font-size: 0.85rem;" id="topbarUserAvatar">R</div>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 p-2">
+              <li class="dropdown-header">
+                <strong id="menuUserName">Riddhi</strong>
+                <div class="small text-muted">riddhi@minto.local</div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" onclick="switchView('view-settings')"><i data-lucide="user" class="me-2" style="width: 16px;"></i> Profile</a></li>
+              <li><a class="dropdown-item" href="#" onclick="switchView('view-settings')"><i data-lucide="settings" class="me-2" style="width: 16px;"></i> Settings</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Body Views Container -->
+      <main class="content-body">
+
+        <!-- ================================================================
+             VIEW 1: OVERVIEW (DASHBOARD)
+             ================================================================ -->
+        <section class="view-pane active" id="view-overview">
+          
+          <!-- Welcome Hero -->
+          <div class="welcome-hero">
+            <div>
+              <h1 class="welcome-title" id="greetingHeader">Good morning, Riddhi 👋</h1>
+              <p class="welcome-subtitle" id="motivationalSubtitle">Here’s what’s happening with your productivity today.</p>
+            </div>
+            <div class="date-pill">
+              <i data-lucide="calendar" style="width: 16px; height: 16px; color: var(--primary);"></i>
+              <span id="currentDateDisplay">Sunday, September 20, 2026</span>
+            </div>
+          </div>
+
+          <!-- Productivity Summary Cards (5 KPI Metrics) -->
+          <div class="kpi-grid">
+            <!-- Total Tasks -->
+            <div class="kpi-card kpi-total">
+              <div class="kpi-header">
+                <span class="kpi-label">Total Tasks</span>
+                <div class="kpi-icon-pill"><i data-lucide="layers" style="width: 16px; height: 16px;"></i></div>
+              </div>
+              <div class="kpi-value" id="kpiTotal">0</div>
+              <div class="kpi-trend">All active & finished</div>
+            </div>
+
+            <!-- Completed Tasks -->
+            <div class="kpi-card kpi-completed">
+              <div class="kpi-header">
+                <span class="kpi-label">Completed</span>
+                <div class="kpi-icon-pill"><i data-lucide="check-circle" style="width: 16px; height: 16px;"></i></div>
+              </div>
+              <div class="kpi-value" id="kpiCompleted">0</div>
+              <div class="kpi-trend text-success"><i data-lucide="trending-up" style="width: 13px; height: 13px;"></i> Great progress</div>
+            </div>
+
+            <!-- Pending Tasks -->
+            <div class="kpi-card kpi-pending">
+              <div class="kpi-header">
+                <span class="kpi-label">Pending</span>
+                <div class="kpi-icon-pill"><i data-lucide="clock" style="width: 16px; height: 16px;"></i></div>
+              </div>
+              <div class="kpi-value" id="kpiPending">0</div>
+              <div class="kpi-trend">In queue to do</div>
+            </div>
+
+            <!-- Overdue Tasks -->
+            <div class="kpi-card kpi-overdue">
+              <div class="kpi-header">
+                <span class="kpi-label">Overdue</span>
+                <div class="kpi-icon-pill"><i data-lucide="alert-triangle" style="width: 16px; height: 16px;"></i></div>
+              </div>
+              <div class="kpi-value" id="kpiOverdue">0</div>
+              <div class="kpi-trend text-danger" id="kpiOverdueTrend">Requires attention</div>
+            </div>
+
+            <!-- Completion Rate -->
+            <div class="kpi-card kpi-rate">
+              <div class="kpi-header">
+                <span class="kpi-label">Completion Rate</span>
+                <div class="kpi-icon-pill"><i data-lucide="percent" style="width: 16px; height: 16px;"></i></div>
+              </div>
+              <div class="kpi-value" id="kpiRate">0%</div>
+              <div class="kpi-trend" id="kpiRateTrend">Target: 100%</div>
+            </div>
+          </div>
+
+          <!-- Main 2-Column Dashboard Grid -->
+          <div class="dashboard-grid">
+            
+            <!-- Left Main Column -->
+            <div class="dashboard-col-main">
+              
+              <!-- Today's Focus Card -->
+              <div class="saas-card">
+                <div class="saas-card-header">
+                  <h3 class="saas-card-title">
+                    <i data-lucide="target" style="width: 20px; height: 20px; color: var(--primary);"></i>
+                    Today’s Focus
+                  </h3>
+                  <button class="btn btn-sm btn-outline-secondary" onclick="switchView('view-tasks')">View All</button>
+                </div>
+
+                <div class="focus-task-list" id="todayFocusList">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+              <!-- Recent Activity Feed -->
+              <div class="saas-card">
+                <div class="saas-card-header">
+                  <h3 class="saas-card-title">
+                    <i data-lucide="activity" style="width: 20px; height: 20px; color: var(--primary);"></i>
+                    Recent Activity
+                  </h3>
+                </div>
+                <div class="activity-feed-list" id="recentActivityList">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Sidebar Column -->
+            <div class="dashboard-col-side">
+              
+              <!-- Progress Overview Widget -->
+              <div class="saas-card">
+                <div class="saas-card-header">
+                  <h3 class="saas-card-title">
+                    <i data-lucide="pie-chart" style="width: 18px; height: 18px; color: var(--primary);"></i>
+                    Progress Overview
+                  </h3>
+                </div>
+
+                <div class="circular-progress-box">
+                  <div style="position: relative; width: 140px; height: 140px;">
+                    <canvas id="progressDoughnutChart"></canvas>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                      <div class="h3 fw-bold mb-0" id="doughnutCenterPct">0%</div>
+                      <small class="text-muted" style="font-size: 0.7rem;">DONE</small>
+                    </div>
+                  </div>
+                  <div class="custom-progress-line">
+                    <div class="custom-progress-fill" id="progressLineFill" style="width: 0%;"></div>
+                  </div>
+                  <div class="progress-quote" id="progressQuoteCard">“Plan it. Do it. Done.”</div>
+                </div>
+              </div>
+
+              <!-- Upcoming Schedule Widget -->
+              <div class="saas-card">
+                <div class="saas-card-header">
+                  <h3 class="saas-card-title">
+                    <i data-lucide="calendar-clock" style="width: 18px; height: 18px; color: var(--primary);"></i>
+                    Upcoming Schedule
+                  </h3>
+                </div>
+                <div class="timeline-list" id="upcomingScheduleList">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================================
+             VIEW 2: MY TASKS
+             ================================================================ -->
+        <section class="view-pane" id="view-tasks">
+          
+          <div class="welcome-hero mb-3">
+            <div>
+              <h1 class="welcome-title">My Tasks</h1>
+              <p class="welcome-subtitle">Manage, prioritize, and accomplish your daily responsibilities.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddTaskModal()">
+              <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+              <span>Create Task</span>
+            </button>
+          </div>
+
+          <!-- Controls & Filter Toolbar -->
+          <div class="task-controls-bar">
+            <!-- Filter Tabs -->
+            <div class="task-filter-tabs">
+              <button class="tab-pill-btn active" data-tab="all" onclick="setTaskTab('all')">All</button>
+              <button class="tab-pill-btn" data-tab="today" onclick="setTaskTab('today')">Today</button>
+              <button class="tab-pill-btn" data-tab="upcoming" onclick="setTaskTab('upcoming')">Upcoming</button>
+              <button class="tab-pill-btn" data-tab="completed" onclick="setTaskTab('completed')">Completed</button>
+              <button class="tab-pill-btn" data-tab="overdue" onclick="setTaskTab('overdue')">Overdue</button>
+            </div>
+
+            <!-- Filters & Sorting -->
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+              <!-- Priority Filter -->
+              <select class="form-select form-select-sm" id="filterPriority" style="width: 120px;" onchange="applyFilters()">
+                <option value="">Priority: All</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+
+              <!-- Category Filter -->
+              <select class="form-select form-select-sm" id="filterCategory" style="width: 130px;" onchange="applyFilters()">
+                <option value="">Category: All</option>
+                <option value="General">General</option>
+                <option value="Study">Study</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Project">Project</option>
+              </select>
+
+              <!-- Sort Option -->
+              <select class="form-select form-select-sm" id="sortTasks" style="width: 135px;" onchange="applyFilters()">
+                <option value="due_date">Sort: Due Date</option>
+                <option value="priority">Sort: Priority</option>
+                <option value="title">Sort: Name</option>
+              </select>
+
+              <!-- View Mode (List / Grid) -->
+              <div class="view-mode-toggle">
+                <button class="view-mode-btn active" id="btnModeList" onclick="setViewMode('list')" title="List View">
+                  <i data-lucide="list" style="width: 16px; height: 16px;"></i>
+                </button>
+                <button class="view-mode-btn" id="btnModeGrid" onclick="setViewMode('grid')" title="Grid View">
+                  <i data-lucide="layout-grid" style="width: 16px; height: 16px;"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tasks Container -->
+          <div id="myTasksContainer" class="focus-task-list">
+            <!-- Rendered dynamically -->
+          </div>
+
+        </section>
+
+
+        <!-- ================================================================
+             VIEW 3: CALENDAR
+             ================================================================ -->
+        <section class="view-pane" id="view-calendar">
+          
+          <div class="calendar-controls">
+            <div class="d-flex align-items-center gap-3">
+              <h2 class="calendar-month-title mb-0" id="calendarMonthTitle">September 2026</h2>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-outline-secondary" onclick="navigateCalendar(-1)"><i data-lucide="chevron-left" style="width: 14px;"></i></button>
+                <button class="btn btn-outline-secondary" onclick="navigateCalendar(0)">Today</button>
+                <button class="btn btn-outline-secondary" onclick="navigateCalendar(1)"><i data-lucide="chevron-right" style="width: 14px;"></i></button>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-primary" onclick="openAddTaskModal()">
+                <i data-lucide="plus" style="width: 14px;"></i> Add Event
+              </button>
+            </div>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div class="calendar-grid" id="calendarGrid">
+            <!-- Rendered dynamically -->
+          </div>
+
+        </section>
+
+
+        <!-- ================================================================
+             VIEW 4: PROJECTS
+             ================================================================ -->
+        <section class="view-pane" id="view-projects">
+          
+          <div class="welcome-hero mb-4">
+            <div>
+              <h1 class="welcome-title">Projects & Categories</h1>
+              <p class="welcome-subtitle">Organize your work streams and observe category progress.</p>
+            </div>
+          </div>
+
+          <div class="row g-4" id="projectsCardsRow">
+            <!-- Project Cards Rendered Dynamically -->
+          </div>
+
+        </section>
+
+
+        <!-- ================================================================
+             VIEW 5: ANALYTICS
+             ================================================================ -->
+        <section class="view-pane" id="view-analytics">
+          
+          <div class="welcome-hero mb-4">
+            <div>
+              <h1 class="welcome-title">Productivity Insights</h1>
+              <p class="welcome-subtitle">Real-time statistics and velocity metrics based on your actual task history.</p>
+            </div>
+          </div>
+
+          <!-- Charts Grid -->
+          <div class="analytics-grid">
+            <!-- Weekly Activity Trend -->
+            <div class="saas-card">
+              <div class="saas-card-header">
+                <h3 class="saas-card-title">
+                  <i data-lucide="line-chart" style="width: 18px; color: var(--primary);"></i>
+                  Weekly Activity (7 Days)
+                </h3>
+              </div>
+              <div style="height: 250px;">
+                <canvas id="chartWeeklyTrend"></canvas>
+              </div>
+            </div>
+
+            <!-- Task Status Distribution -->
+            <div class="saas-card">
+              <div class="saas-card-header">
+                <h3 class="saas-card-title">
+                  <i data-lucide="pie-chart" style="width: 18px; color: var(--success);"></i>
+                  Status Distribution
+                </h3>
+              </div>
+              <div style="height: 250px;">
+                <canvas id="chartStatusBreakdown"></canvas>
+              </div>
+            </div>
+
+            <!-- Priority Breakdown -->
+            <div class="saas-card">
+              <div class="saas-card-header">
+                <h3 class="saas-card-title">
+                  <i data-lucide="bar-chart-2" style="width: 18px; color: var(--warning);"></i>
+                  Priority Distribution
+                </h3>
+              </div>
+              <div style="height: 250px;">
+                <canvas id="chartPriorityBreakdown"></canvas>
+              </div>
+            </div>
+
+            <!-- Category Distribution -->
+            <div class="saas-card">
+              <div class="saas-card-header">
+                <h3 class="saas-card-title">
+                  <i data-lucide="layers" style="width: 18px; color: var(--info);"></i>
+                  Category Breakdown
+                </h3>
+              </div>
+              <div style="height: 250px;">
+                <canvas id="chartCategoryBreakdown"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ================================================================
+             VIEW 6: NOTES & SCRATCHPAD
+             ================================================================ -->
+        <section class="view-pane" id="view-notes">
+          
+          <div class="welcome-hero mb-4">
+            <div>
+              <h1 class="welcome-title">Notes & Scratchpad</h1>
+              <p class="welcome-subtitle">Jot down quick thoughts, meeting memos, and study notes.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openNoteModal()">
+              <i data-lucide="plus" style="width: 16px;"></i>
+              <span>New Note</span>
+            </button>
+          </div>
+
+          <div class="notes-grid" id="notesGridContainer">
+            <!-- Notes Rendered Dynamically -->
+          </div>
+
+        </section>
+
+
+        <!-- ================================================================
+             VIEW 7: SETTINGS
+             ================================================================ -->
+        <section class="view-pane" id="view-settings">
+          
+          <div class="welcome-hero mb-4">
+            <div>
+              <h1 class="welcome-title">Settings</h1>
+              <p class="welcome-subtitle">Configure workspace preferences and manage local task data.</p>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <!-- Profile Card -->
+              <div class="saas-card">
+                <h3 class="saas-card-title mb-3">
+                  <i data-lucide="user-check" style="width: 18px; color: var(--primary);"></i>
+                  User Profile
+                </h3>
+                <div class="mb-3">
+                  <label class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="settingsUserName" value="Riddhi">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="settingsUserEmail" value="riddhi@minto.local">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Productivity Title / Role</label>
+                  <input type="text" class="form-control" id="settingsUserRole" value="Productivity Lead">
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="saveProfileSettings()">Save Changes</button>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <!-- Preferences & Data Management -->
+              <div class="saas-card mb-4">
+                <h3 class="saas-card-title mb-3">
+                  <i data-lucide="sliders" style="width: 18px; color: var(--primary);"></i>
+                  Appearance & Theme
+                </h3>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Dark Mode</strong>
+                    <div class="small text-muted">Switch between dark and light workspace themes.</div>
+                  </div>
+                  <button class="btn btn-outline-secondary btn-sm" onclick="toggleTheme()">Toggle Theme</button>
+                </div>
+              </div>
+
+              <div class="saas-card">
+                <h3 class="saas-card-title mb-3">
+                  <i data-lucide="database" style="width: 18px; color: var(--warning);"></i>
+                  Data Management
+                </h3>
+                <p class="small text-muted mb-3">All your tasks are stored in your local <code>tasks.json</code> file.</p>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-outline-primary btn-sm" onclick="exportTasksJson()">
+                    <i data-lucide="download" style="width: 14px;"></i> Export Tasks JSON
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- ====================================================================
+       MODALS
+       ==================================================================== -->
+
+  <!-- Add / Edit Task Modal -->
+  <div class="modal fade" id="taskModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskModalTitle">
+            <i data-lucide="plus-circle" class="me-2" style="width: 20px; color: var(--primary);"></i>
+            Create New Task
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="taskForm" onsubmit="saveTaskForm(event)">
+          <input type="hidden" id="taskFormId" value="">
+          
+          <div class="modal-body">
+            <!-- Title -->
+            <div class="mb-3">
+              <label class="form-label" for="taskTitleInput">Task Title *</label>
+              <input type="text" class="form-control" id="taskTitleInput" placeholder="What needs to get done?" required>
+              <div class="invalid-feedback">Task title is required.</div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label class="form-label" for="taskDescInput">Description / Notes</label>
+              <textarea class="form-control" id="taskDescInput" rows="2" placeholder="Add optional details, links, or notes..."></textarea>
+            </div>
+
+            <!-- Due Date & Time -->
+            <div class="row g-2 mb-2">
+              <div class="col-sm-7">
+                <label class="form-label" for="taskDueDateInput">Due Date</label>
+                <input type="date" class="form-control" id="taskDueDateInput">
+              </div>
+              <div class="col-sm-5">
+                <label class="form-label" for="taskDueTimeInput">Due Time</label>
+                <input type="time" class="form-control" id="taskDueTimeInput">
+              </div>
+            </div>
+
+            <!-- Quick Date Chips -->
+            <div class="d-flex flex-wrap gap-1 mb-3">
+              <button type="button" class="date-preset-chip" onclick="setModalDatePreset(0)">Today</button>
+              <button type="button" class="date-preset-chip" onclick="setModalDatePreset(1)">Tomorrow</button>
+              <button type="button" class="date-preset-chip" onclick="setModalDatePreset(3)">+3 Days</button>
+              <button type="button" class="date-preset-chip" onclick="setModalDatePreset(7)">Next Week</button>
+              <button type="button" class="date-preset-chip text-muted" onclick="clearModalDate()">Clear</button>
+            </div>
+
+            <!-- Priority & Category Row -->
+            <div class="row g-2 mb-3">
+              <div class="col-sm-4">
+                <label class="form-label" for="taskPriorityInput">Priority</label>
+                <select class="form-select" id="taskPriorityInput">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label" for="taskCategoryInput">Category</label>
+                <select class="form-select" id="taskCategoryInput">
+                  <option value="General" selected>General</option>
+                  <option value="Study">Study</option>
+                  <option value="Work">Work</option>
+                  <option value="Personal">Personal</option>
+                  <option value="Project">Project</option>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label" for="taskStatusInput">Status</label>
+                <select class="form-select" id="taskStatusInput">
+                  <option value="To Do" selected>To Do</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="On Hold">On Hold</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Optional Reminder -->
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="taskReminderCheck">
+              <label class="form-check-label small" for="taskReminderCheck">
+                Set priority focus reminder
+              </label>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveTask">Create Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center p-4">
+          <div class="text-danger mb-3">
+            <i data-lucide="trash-2" style="width: 44px; height: 44px;"></i>
+          </div>
+          <h5 class="fw-bold mb-2">Delete Task?</h5>
+          <p class="small text-muted mb-4" id="deleteTaskTitlePreview">Are you sure you want to remove this task?</p>
+          <div class="d-flex justify-content-center gap-2">
+            <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger btn-sm px-3" id="btnConfirmDelete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Note Modal -->
+  <div class="modal fade" id="noteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="noteModalTitle">New Note</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="noteForm" onsubmit="saveNoteForm(event)">
+          <input type="hidden" id="noteFormId" value="">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Title *</label>
+              <input type="text" class="form-control" id="noteTitleInput" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Content</label>
+              <textarea class="form-control" id="noteContentInput" rows="4"></textarea>
+            </div>
+            <div class="row g-2">
+              <div class="col-sm-6">
+                <label class="form-label">Category</label>
+                <select class="form-select" id="noteCategoryInput">
+                  <option value="General">General</option>
+                  <option value="Study">Study</option>
+                  <option value="Work">Work</option>
+                  <option value="Personal">Personal</option>
+                  <option value="Project">Project</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label">Color Accent</label>
+                <input type="color" class="form-control form-control-color w-100" id="noteColorInput" value="#6366F1">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Note</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Application Logic -->
+  <script src="/static/js/app.js"></script>
+
+</body>
+</html>
