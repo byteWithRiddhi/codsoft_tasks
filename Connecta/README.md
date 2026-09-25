@@ -39,7 +39,7 @@
 ## 📁 Project Structure
 
 ```
-ContactBook/
+Connecta/
 │
 ├── main.py                     # Application entry point
 ├── requirements.txt            # Project dependencies (customtkinter, darkdetect, Pillow)
