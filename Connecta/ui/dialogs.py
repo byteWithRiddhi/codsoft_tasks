@@ -1,9 +1,3 @@
-"""
-Dialog Components for Connecta
-==============================
-Styled modal dialogs including deletion confirmations.
-"""
-
 import customtkinter as ctk
 from typing import Callable, Optional
 from . import theme

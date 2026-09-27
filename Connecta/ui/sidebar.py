@@ -1,10 +1,3 @@
-"""
-Sidebar Navigation Component for Connecta
-=========================================
-Clean vertical navigation sidebar with application branding, live counter badges,
-category filters, theme switch, and Add Contact CTA.
-"""
-
 import customtkinter as ctk
 from typing import Callable, Dict, Any, List
 from . import theme

@@ -1,9 +1,3 @@
-"""
-Toast Notification Component for Connecta
-=========================================
-Non-disruptive, auto-dismissing in-app notification banner.
-"""
-
 import customtkinter as ctk
 from typing import Optional
 from . import theme

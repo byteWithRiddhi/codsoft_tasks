@@ -1,10 +1,3 @@
-"""
-Contact Details Panel for Connecta
-==================================
-Right-hand preview panel displaying full contact information, large avatar,
-category badge, favorite toggle, copy actions, and Edit/Delete triggers.
-"""
-
 import customtkinter as ctk
 from typing import Optional, Dict, Any, Callable
 from . import theme

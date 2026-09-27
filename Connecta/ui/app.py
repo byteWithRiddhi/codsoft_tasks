@@ -105,9 +105,6 @@ class ConnectaApp(ctk.CTk):
     def _focus_search(self):
         self.list_view.search_entry.focus_set()
 
-    # ---------------------------------------------------------
-    # NAVIGATION & VIEW LOGIC
-    # ---------------------------------------------------------
     def handle_view_change(self, view_id: str):
         """Called when a user clicks a sidebar navigation item."""
         self.current_view = view_id
@@ -193,9 +190,6 @@ class ConnectaApp(ctk.CTk):
                     border_width=1,
                 )
 
-    # ---------------------------------------------------------
-    # CRUD & ACTION HANDLERS
-    # ---------------------------------------------------------
     def open_add_modal(self):
         """Open Add Contact modal form."""
         def on_saved(new_contact):

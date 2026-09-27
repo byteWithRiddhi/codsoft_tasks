@@ -1,17 +1,6 @@
-"""
-Connecta - Contact Manager
-==========================
-A modern, attractive, professional desktop contact management application
-built with Python and CustomTkinter.
-
-Designed for productivity with card-based layouts, real-time search,
-favorites, category grouping, stats dashboard, and seamless JSON persistence.
-"""
-
 import sys
 import os
 
-# Ensure local packages can be imported
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 

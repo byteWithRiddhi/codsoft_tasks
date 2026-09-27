@@ -1,17 +1,5 @@
-"""
-Theme and Design Tokens for Connecta
-====================================
-Defines color palettes for light and dark modes, typography, category badges,
-and deterministic avatar color hashing.
-"""
-
 import hashlib
 from typing import Tuple, Dict
-
-# ---------------------------------------------------------
-# COLOR TOKENS (Light Mode / Dark Mode)
-# CustomTkinter supports tuple format: (light_color, dark_color)
-# ---------------------------------------------------------
 
 # Primary Brand (Indigo)
 PRIMARY = ("#4F46E5", "#6366F1")

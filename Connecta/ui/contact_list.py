@@ -1,10 +1,3 @@
-"""
-Contact List View for Connecta
-==============================
-Main view containing dashboard stat chips, real-time multi-field search,
-sorting controls, scrollable card-based contact rows, and polished empty states.
-"""
-
 import customtkinter as ctk
 from typing import List, Dict, Any, Callable, Optional
 from . import theme

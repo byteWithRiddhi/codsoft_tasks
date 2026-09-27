@@ -1,12 +1,4 @@
 #!/usr/bin/env python3
-"""
-MINTO - Personal Task Manager
-Tagline: "Plan it. Do it. Done."
-
-A modern, aesthetic, cozy, and lightweight desktop To-Do List application.
-Built using Python 3 and Tkinter (Python Standard Library).
-"""
-
 import os
 import sys
 import json

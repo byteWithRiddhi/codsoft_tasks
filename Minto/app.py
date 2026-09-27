@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-MINTO - Modern SaaS Productivity Application
-Flask Backend & REST API
-"""
-
 import os
 import sys
 import json

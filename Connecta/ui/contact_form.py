@@ -1,10 +1,3 @@
-"""
-Contact Form Dialog for Connecta
-================================
-Modern modal window used for both Adding and Editing contacts,
-featuring inline error alerts, clear input fields, and category pickers.
-"""
-
 import customtkinter as ctk
 from typing import Optional, Dict, Any, Callable
 from . import theme
